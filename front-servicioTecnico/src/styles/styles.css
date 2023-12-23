@@ -1,0 +1,129 @@
+#app {
+  height: 100%;
+}
+
+body {
+  background: #ffffff !important  ;
+  font-family: Helvetica Neue, Helvetica, Arial, sans-serif;
+  font-size: 14px;
+  color: #000;
+  margin: 0;
+  padding: 0;
+}
+
+.swiper {
+  width: 100%;
+  height: 500px;
+}
+
+.swiper-slide {
+  text-align: center;
+  font-size: 18px;
+  background: #fff;
+  /* Center slide text vertically */
+  display: flex;
+  justify-content: flex-end !important;
+  align-items: flex-end !important;
+}
+
+.swiper-slide img {
+  position: absolute;
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.button_appBar_logIn {
+  background: rgb(232, 93, 4);
+  background: linear-gradient(
+    180deg,
+    rgba(232, 93, 4, 0.75) 0%,
+    rgba(244, 140, 6, 0.75) 100%
+  );
+}
+
+.button_appBar_logIn:hover {
+  background-color: #e85d04 !important;
+}
+
+.button_appBar_signUp {
+  border-color: #e85d04 !important;
+  width: 150px;
+  color: #000;
+}
+
+@media (min-width: 601px) and (max-width: 1200px) {
+  .button_appBar_signUp,
+  .button_appBar_logIn {
+    max-width: 80px;
+  }
+}
+
+.navBar_brandLogo {
+  height: 25%;
+  width: 25%;
+}
+
+.logo {
+  height: 175px;
+  width: 140px;
+}
+
+.fontColorPrimary {
+  color: #e85d04 !important;
+}
+
+.orangeBorder {
+  border-color: #e85d04 !important;
+  font-weight: bold !important;
+}
+
+.navLink {
+  font-size: 1.5em !important;
+  font-family: "Abel", sans-serif !important;
+}
+
+.navLink:hover {
+  color: #fff !important;
+  background-color: #e85d04 !important;
+}
+
+.logoContainer {
+  width: 100%;
+}
+
+.footer {
+  position: relative;
+  bottom: 0;
+  background-color: #e85d04;
+  width: 100% !important;
+  display: "flex";
+  align-items: "center";
+  gap: 2;
+  padding-bottom: 10px;
+  font-family: "Abel", sans-serif !important;
+  font-size: 1.3rem;
+}
+
+.footer-item > a {
+  color: black;
+  text-decoration: none;
+  outline: none;
+}
+
+.footer-item :hover {
+  color: white;
+}
+
+.footer-item :visited {
+  color: black;
+  text-decoration: none;
+}
+
+.logo:hover {
+  filter: drop-shadow(3px 3px 2px black);
+}
+
+.contNav {
+  background-color: #000;
+}

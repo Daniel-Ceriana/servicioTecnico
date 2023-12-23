@@ -1,0 +1,40 @@
+version: '3.8'
+
+services:
+  api-servicio-tecnico:
+    build:
+      context: ./api-servicioTecnico
+    restart: unless-stopped
+    env_file: ./.env
+    ports:
+      - 4000:4000
+    environment:
+      - MONGO_URI=$MONGO_URI
+      - PORT=$PORT
+      - SECRET_TOKEN=$SECRET_TOKEN
+    networks:
+      - backend
+      - frontend
+    volumes:
+      # bind mount -> for nodemon to work
+      - ./api-servicioTecnico:/api-servicioTecnico
+      # anonymous volume -> so that node modules doesn't restart app constantly at startup
+      - /api-servicioTecnico/node_modules
+  front-servicio-tecnico:
+    depends_on:
+      - api-servicio-tecnico
+    build:
+      context: ./front-servicioTecnico
+      target: dev
+    environment:
+      NODE_ENV: development
+    volumes:
+      # bind mount -> for vite to restart when changes made to code
+      - ./front-servicioTecnico/src:/front-servicioTecnico/src
+    ports:
+      - 3000:3000
+    networks:
+      - frontend  
+networks:
+  backend:
+  frontend:

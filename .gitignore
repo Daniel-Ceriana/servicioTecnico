@@ -1,0 +1,74 @@
+# Logs
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+
+node_modules
+dist
+dist-ssr
+*.local
+
+# Editor directories and files
+.vscode/*
+!.vscode/extensions.json
+.idea
+.DS_Store
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
+#
+.env
+
+#api
+/api-servicioTecnico/node_modules
+/api-servicioTecnico//.pnp
+/api-servicioTecnico/.pnp.js
+# testing
+/api-servicioTecnico/coverage
+
+# production
+/api-servicioTecnico/build
+
+# misc
+/api-servicioTecnico/.DS_Store
+/api-servicioTecnico/.env.local
+/api-servicioTecnico/.env.development.local
+/api-servicioTecnico/.env.test.local
+/api-servicioTecnico/.env.production.local
+
+/api-servicioTecnico/npm-debug.log*
+/api-servicioTecnico/yarn-debug.log*
+/api-servicioTecnico/yarn-error.log*
+
+#front
+
+/front-servicioTecnico/logs
+/front-servicioTecnico/*.log
+/front-servicioTecnico/npm-debug.log*
+/front-servicioTecnico/yarn-debug.log*
+/front-servicioTecnico/yarn-error.log*
+/front-servicioTecnico/pnpm-debug.log*
+/front-servicioTecnico/lerna-debug.log*
+
+/front-servicioTecnico/node_modules
+/front-servicioTecnico/dist
+/front-servicioTecnico/dist-ssr
+/front-servicioTecnico/*.local
+
+# Editor directories and files
+/front-servicioTecnico/.vscode/*
+/front-servicioTecnico/!.vscode/extensions.json
+/front-servicioTecnico/.idea
+/front-servicioTecnico/.DS_Store
+/front-servicioTecnico/*.suo
+/front-servicioTecnico/*.ntvs*
+/front-servicioTecnico/*.njsproj
+/front-servicioTecnico/*.sln
+/front-servicioTecnico/*.sw?

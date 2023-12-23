@@ -1,0 +1,143 @@
+.App {
+    text-align: center;
+    font-family: "Abel", sans-serif;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+    .App-logo {
+        animation: App-logo-spin infinite 20s linear;
+    }
+}
+
+.App-header {
+    background-color: #282c34;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    font-size: calc(10px + 2vmin);
+    color: white;
+}
+
+.App-link {
+    color: #61dafb;
+}
+
+@keyframes App-logo-spin {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+.producto-card {
+    border: 1px solid #ccc;
+    padding: 10px;
+    margin: 10px;
+    width: 300px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    background-color: rgba(232, 93, 4, 0.75);
+    /* Fondo con el color deseado */
+    transition: transform 0.2s, box-shadow 0.2s;
+    /* Transiciones para el efecto de sombra y zoom */
+    cursor: pointer;
+    /* Cambia el cursor al puntero cuando se coloca encima */
+}
+
+.producto-card:hover {
+    transform: scale(1.05);
+    /* Efecto de zoom al pasar el cursor */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    /* Efecto de sombra al pasar el cursor */
+}
+
+.producto-imagen {
+    max-width: 100%;
+    height: auto;
+    margin-bottom: 10px;
+}
+
+.product-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+
+.css-button-sliding-to-left--red {
+    min-width: 130px;
+    height: 40px;
+    color: #fff;
+    padding: 5px 10px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    position: relative;
+    display: inline-block;
+    outline: none;
+    border-radius: 5px;
+    z-index: 0;
+    background: #fff;
+    overflow: hidden;
+    border: 2px solid #d90429;
+    color: #d90429;
+}
+
+.css-button-sliding-to-left--red:hover {
+    color: #fff;
+}
+
+.css-button-sliding-to-left--red:hover:after {
+    width: 100%;
+}
+
+.css-button-sliding-to-left--red:after {
+    content: "";
+    position: absolute;
+    z-index: -1;
+    transition: all 0.3s ease;
+    left: 0;
+    top: 0;
+    width: 0;
+    height: 100%;
+    background: #d90429;
+}
+
+.css-button-rounded--green {
+    min-width: 130px;
+    height: 40px;
+    color: #fff;
+    padding: 5px 10px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    position: relative;
+    display: inline-block;
+    outline: none;
+    border-radius: 5px;
+    border: 2px solid green;
+    background: green;
+}
+
+.css-button-rounded--green:hover {
+    background: #fff;
+    color: #57cc99
+}
+
+.buttonDiv {
+    width: 100%;
+    display: flex;
+    justify-content: space-around;
+}
+
+.filterWrapper {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    width: 100%;
+}

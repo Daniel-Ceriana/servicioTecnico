@@ -1,0 +1,30 @@
+{
+    "name": "api-servicioTecnico",
+    "version": "0.0.1",
+    "description": "Api para panel de admin de servicio tecnico",
+    "main": "server.js",
+    "scripts": { 
+
+        "test": "echo \"Error: no test specified\" && exit 1",
+        "dev": "nodemon --inspect=0.0.0.0:9229 -L server.js"
+    },
+    "author": "Daniel Ceriana",
+    "license": "ISC",
+    "dependencies": {
+        "bcryptjs": "^2.4.3",
+        "cors": "^2.8.5",
+        "crypto": "^1.0.1",
+        "express": "^4.18.2",
+        "googleapis": "^128.0.0",
+        "joi": "^17.11.0",
+        "jsonwebtoken": "^9.0.2",
+        "mongoose": "^7.5.3",
+        "mongoose-paginate-v2": "^1.7.4",
+        "node": "^20.7.0",
+        "nodemailer": "^6.9.7",
+        "nodemon": "^3.0.2",
+        "passport": "^0.6.0",
+        "passport-jwt": "^4.0.1"
+    },
+    "keywords": []
+}
