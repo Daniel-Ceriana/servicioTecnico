@@ -123,8 +123,7 @@ const userController = {
 
 
       if (userExist) {
-
-        if (userExist.from.indexOf(from) !== -1) {
+          if (userExist.password.filter((signUp)=>signUp.method===from)!==-1) {
           res.json({
             success: false,
             from: from,
@@ -144,12 +143,12 @@ const userController = {
         //     message: from + " was added to your sign in methods.",
         //   });
         // }
+
       } else {
 
         const newUser = new User({
           fullName,
           email,
-          from: from,
           password:{},
           aplication: aplication,
           uniqueString: uniqueString,
@@ -159,11 +158,11 @@ const userController = {
         if (from === "signUp-form") {
           
           // console.log("Email Sent");
-          newUser.password={method:"signUp-form","password":[hashPassword]};
+          newUser.password={from:"signUp-form","password":[hashPassword]};
           await newUser.save();
           res.json({
             success: true,
-            from: from,
+            from: "controller",
             message:
               "User created and added, check your email to verify account ",
           });
