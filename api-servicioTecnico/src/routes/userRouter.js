@@ -7,7 +7,7 @@ const userController = require("../controllers/userController");
 
 userRouter.post("/auth/signUp", signUpValidator, userController.signUp);
 userRouter.post("/auth/signIn", signInValidator, userController.signIn);
-userRouter.get("/auth/verifyEmail/:string", userController.verifyUserAccount);
+userRouter.get("/auth/verifyEmail/:string", userController.verifyEmail);
 userRouter.get(
   "/auth/verifyToken",
   passport.authenticate("jwt", { session: false }),
@@ -15,5 +15,8 @@ userRouter.get(
 );
 userRouter.put("/auth/:id", userController.updateUser);
 // -----------------------token
+
+//test
+userRouter.get("/auth/testFindUsers",userController.testFindUsers)
 
 module.exports = userRouter;

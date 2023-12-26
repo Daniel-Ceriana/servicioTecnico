@@ -6,7 +6,6 @@ const signUpValidator = (req, res, next) => {
     email: joi.string().email({ minDomainSegments: 2 }).required().messages({
       "string.email": "wrong email format",
     }),
-    // dni: joi.number().required(),
     password: joi
       .string()
       .min(8)
