@@ -42,12 +42,10 @@ const userController = {
           message: "User or password incorrect.",
         });
       }
-
-      const isPasswordCorrect = user.password.filter((pass) =>
-        bcryptjs.compareSync(password, pass)
-      );
-      console.log(isPasswordCorrect);
-      console.log(bcryptjs.compareSync(password, user.password[0]));
+      const aux = user.password.filter((signUp)=>signUp.method===from)
+      const isPasswordCorrect  = await bcryptjs.compare(password, ...aux[0].password)
+        console.log(isPasswordCorrect)
+      console.log("ASDASDA")
       const dataUser = {
         id: user._id,
         fullName: user.fullName,
@@ -56,26 +54,7 @@ const userController = {
         from: from,
       };
 
-      if (isPasswordCorrect.length > 0) {
-        const aux = user.from.filter((from) => from == "google");
-        if (from !== "signUp-form" && aux.length == 0) {
-          const hashPassword = bcryptjs.hashSync(password, 10);
-          user.from.push(from);
-          user.password.push(hashPassword);
-
-          await user.save();
-          const token = jwt.sign(dataUser, process.env.SECRET_TOKEN, {
-            expiresIn: "1h",
-          });
-          res.json({
-            // agregar email verification true
-            success: true,
-            from,
-            response: { token, dataUser },
-            message: from + " added to your signing in methods",
-          });
-        } else {
-          // si algo se rompe, poner {...dataUser}
+      if (isPasswordCorrect) {
           const token = jwt.sign(dataUser, process.env.SECRET_TOKEN, {
             expiresIn: "1h",
           });
@@ -85,7 +64,7 @@ const userController = {
             response: { token, dataUser },
             message: "Welcome back, " + dataUser.fullName,
           });
-        }
+        // }
       } else {
         res.json({
           success: false,
