@@ -44,8 +44,6 @@ const userController = {
       }
       const aux = user.password.filter((signUp)=>signUp.method===from)
       const isPasswordCorrect  = await bcryptjs.compare(password, ...aux[0].password)
-        console.log(isPasswordCorrect)
-      console.log("ASDASDA")
       const dataUser = {
         id: user._id,
         fullName: user.fullName,
@@ -64,7 +62,7 @@ const userController = {
             response: { token, dataUser },
             message: "Welcome back, " + dataUser.fullName,
           });
-        // }
+        
       } else {
         res.json({
           success: false,
