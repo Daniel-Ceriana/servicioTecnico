@@ -3,7 +3,6 @@ const bcryptjs = require("bcryptjs");
 const crypto = require("crypto");
 
 const jwt = require("jsonwebtoken");
-const sendMail = require("../services/sendMail.js");
 const sendMailMethod = require("../services/sendMail.js");
 
 const userController = {
@@ -15,7 +14,7 @@ const userController = {
       );
       console.log(user)
       sendMailMethod.emailVerified(user.email,user.fullName)
-      return res.redirect("http://localhost:3000/login");
+      return res.redirect(`${process.env.FRONT_BASE_URL}/login`);
     } catch (error) {
       console.log(error)
       return res.json({
@@ -244,7 +243,82 @@ const userController = {
     }
   },
   restorePassword: async (req,res)=>{
+    let valid=false;
+    try {
+      console.log(req.query)
+      if(req.query.email){
+        // crear uniqueString 2 en user. Puede ser token para que tenga un tiempo de validez
+       const uniqueString2 = crypto.randomBytes(15).toString("hex");
 
+        const token = jwt.sign({email:req.query.email,uniqueString2}, process.env.SECRET_TOKEN, {
+          expiresIn: 600,
+        });
+        const user = await User.findOneAndUpdate( 
+          { email:req.query.email },
+          { uniqueString2,
+            changePasswordToken:token
+          },
+          { new: true })
+          console.log("ASDSAD")
+        sendMailMethod.restorePassword(req.query.email,uniqueString2)
+        valid=true;
+        return res.json({
+          success:true,
+          message:"Check your inbox to restore password.",
+          response:{email:req.query,user}
+        })
+      }
+      if(req.query.string2){
+        console.log("ASDASD")
+        //validar el unique string 2 y redireccionar a pagina restore password. Mandar un token que lo valide.
+        valid=true
+        return res.redirect(`${process.env.FRONT_BASE_URL}/restorePassword`);
+      }
+
+      if(req.body){
+        // recibe password y el unique string 2 para buscar al usuario. chequea el token creado anteriormente(guardado en el usuario) para validar
+        // si todo es valido, manda mail confirmando
+        console.log(req.body)
+        if(req.body.password && req.body.uniqueString2){
+          const aux=await User.findOne({ uniqueString2:req.body.uniqueString2 });
+          console.log(aux)
+          // const user = await User.findOneAndUpdate( 
+          //   { uniqueString2:req.body.uniqueString2 },
+          //   { password:req.body.password,
+          //     changePasswordToken:""
+          //   },
+          //   { new: true })
+        }
+        valid=true
+        return res.json({
+          success:true,
+          message:"Password restored.",
+          // response:{dataUser} 
+        })
+      }
+
+
+
+      // if nothing is valid then
+      if(!valid){
+        return res.json({
+          success: false,
+          from:"controller",
+          message: "Something went wrong, try again later",
+        });
+      }
+      
+      
+      
+    } catch (error) {
+      console.log(error)
+
+      return res.json({
+        success: false,
+        from:"controller",
+        message: "Something went wrong while restoring password, try again later",
+      });
+    }
   },
   changeRole: async (req,res)=>{
 

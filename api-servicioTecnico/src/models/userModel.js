@@ -7,6 +7,7 @@ const userSchema = new mongoose.Schema({
   aplication: { type: String },
   uniqueString: { type: String, required: true },
   uniqueString2: { type: String },
+  changePasswordToken:{type:String},
   emailVerification: { type: Boolean, required: true },
   role: { type: String, required: true, default: "user" },
 

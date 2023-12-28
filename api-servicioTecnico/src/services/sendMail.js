@@ -3,6 +3,7 @@ const { google } = require("googleapis");
 const OAuth2 = google.auth.OAuth2;
 const verifyEmail = require("./mails/VerifyEmail")
 const emailVerified = require("./mails/EmailVerified")
+const restorePassword = require("./mails/RestorePassword")
 
 const sendMail = (email, options) => {
   // console.log(emailTypes.VerifyEmail("asd"))
@@ -53,7 +54,7 @@ const sendMail = (email, options) => {
 const getEmailOptions={
   VerifyEmail:(uniqueString)=>verifyEmail(uniqueString),
   EmailVerified:(name)=>emailVerified(name),
-  RestorePassword:"",
+  RestorePassword:(uniqueString2)=>restorePassword(uniqueString2),
   PasswordRestored:"",
   UpdateUserEmail:"",
   UpdateRole:""
@@ -66,8 +67,8 @@ const sendMailMethod={
   emailVerified:(email,name) => {
     sendMail(email,getEmailOptions.EmailVerified(name))
   },
-  restorePassword:(email,uniqueString) => {
-    sendMail(email,getEmailOptions.RestorePassword(uniqueString))
+  restorePassword:(email,uniqueString2) => {
+    sendMail(email,getEmailOptions.RestorePassword(uniqueString2))
   },
   passwordRestored:(email,uniqueString) => {
     sendMail(email,getEmailOptions.PasswordRestored(uniqueString))

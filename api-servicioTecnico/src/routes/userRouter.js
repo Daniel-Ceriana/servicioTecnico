@@ -16,7 +16,12 @@ userRouter.get(
 userRouter.put("/auth/:id", userController.updateUser);
 // -----------------------token
 
+// password
+userRouter.get("/auth/RestorePassword",userController.restorePassword)
+userRouter.post("/auth/RestorePassword",userController.restorePassword)
+
 //test
 userRouter.get("/auth/testFindUsers",userController.testFindUsers)
+
 
 module.exports = userRouter;
