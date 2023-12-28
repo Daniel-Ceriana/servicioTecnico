@@ -142,7 +142,7 @@ const userController = {
           
           // console.log("Email Sent");
           sendMailMethod.verifyEmail(email,uniqueString)
-          newUser.password={from:"signUp-form","password":[hashPassword]};
+          newUser.password={from:"signUp-form","password":hashPassword};
           await newUser.save();
           res.json({
             success: true,
