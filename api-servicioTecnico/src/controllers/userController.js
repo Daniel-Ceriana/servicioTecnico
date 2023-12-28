@@ -4,20 +4,25 @@ const crypto = require("crypto");
 
 const jwt = require("jsonwebtoken");
 const sendMail = require("../services/sendMail.js");
+const sendMailMethod = require("../services/sendMail.js");
 
 const userController = {
   verifyEmail: async (req, res) => {
     try {
-      await User.findOneAndUpdate(
+      const user = await User.findOneAndUpdate(
         { uniqueString: req.params.string },
         { emailVerification: true }
       );
+      console.log(user)
+      sendMailMethod.emailVerified(user.email,user.fullName)
       return res.redirect("http://localhost:3000/login");
     } catch (error) {
+      console.log(error)
       return res.json({
         success: false,
         from: "user verification",
         message: "Error: user not found",
+  
       });
     }
   },
@@ -136,7 +141,7 @@ const userController = {
         if (from === "signUp-form") {
           
           // console.log("Email Sent");
-          sendMail(email,uniqueString)
+          sendMailMethod.verifyEmail(email,uniqueString)
           newUser.password={from:"signUp-form","password":[hashPassword]};
           await newUser.save();
           res.json({

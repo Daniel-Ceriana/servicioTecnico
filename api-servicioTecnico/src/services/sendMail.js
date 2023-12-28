@@ -2,18 +2,9 @@ const nodemailer = require("nodemailer");
 const { google } = require("googleapis");
 const OAuth2 = google.auth.OAuth2;
 const verifyEmail = require("./mails/VerifyEmail")
+const emailVerified = require("./mails/EmailVerified")
 
-const emailTypes={
-  VerifyEmail:(uniqueString)=>verifyEmail(uniqueString),
-  EmailVerified:"",
-  RestorePassword:"",
-  PasswordRestored:"",
-  UpdateUserEmail:"",
-  UpdateRole:""
-}
-
-
-const sendMail = (email, uniqueString) => {
+const sendMail = (email, options) => {
   // console.log(emailTypes.VerifyEmail("asd"))
   const myOAuth2Client = new OAuth2(
     process.env.GOOGLE_CLIENTID,
@@ -46,15 +37,8 @@ const sendMail = (email, uniqueString) => {
     // mejorar
     from: process.env.GOOGLE_USER,
     to: email,
-    subject: "Validacion de mail",
-    html: `
-    <div style="display: flex;  flex-direction: column;  align-items: center;background-color: #ffc16f ; margin: 10rem;">
-    <img src="https://i.ibb.co/bbhkHtH/logo-Sin-Fondo.png" width="100px" alt="">
-<h1 style="color: white;font-family: monospace;"> Haz click<a style="text-decoration: none; color: gray; font-family:monospace;" href=http://localhost:4000/api/auth/verifyEmail/${uniqueString}> Aquí </a> para validar tu cuenta</h1>
-
-<p style="color: white; font-family: monospace; font-size: 1.2rem;"> Hemos recibido una solicitud de confirmación de email para tu cuenta de Gluttony.<p/>
-</div>
-        `,
+    subject: options.subject,
+    html: options.html,
   };
 
   transporter.sendMail(mailOptions, (error, response) => {
@@ -66,4 +50,34 @@ const sendMail = (email, uniqueString) => {
   });
 };
 
-module.exports = sendMail;
+const getEmailOptions={
+  VerifyEmail:(uniqueString)=>verifyEmail(uniqueString),
+  EmailVerified:(name)=>emailVerified(name),
+  RestorePassword:"",
+  PasswordRestored:"",
+  UpdateUserEmail:"",
+  UpdateRole:""
+}
+
+const sendMailMethod={
+  verifyEmail:(email,uniqueString) => {
+    sendMail(email,getEmailOptions.VerifyEmail(uniqueString))
+  },
+  emailVerified:(email,name) => {
+    sendMail(email,getEmailOptions.EmailVerified(name))
+  },
+  restorePassword:(email,uniqueString) => {
+    sendMail(email,getEmailOptions.RestorePassword(uniqueString))
+  },
+  passwordRestored:(email,uniqueString) => {
+    sendMail(email,getEmailOptions.PasswordRestored(uniqueString))
+  },
+  updateUserEmail:(email,uniqueString) => {
+    sendMail(email,getEmailOptions.UpdateUserEmail(uniqueString))
+  },
+  updateRole:(email,uniqueString) => {
+    sendMail(email,getEmailOptions.UpdateRole(uniqueString))
+  },
+}
+
+module.exports = sendMailMethod;
