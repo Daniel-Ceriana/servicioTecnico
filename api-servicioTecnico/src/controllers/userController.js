@@ -34,12 +34,10 @@ const userController = {
         message: "Error: no data found",
       });
     }
-    console.log(req.body);
     const { email, password, from } = req.body.userData;
 
     try {
       const user = await User.findOne({ email });
-
       if (!user) {
         return res.json({
           success: false,
@@ -47,8 +45,11 @@ const userController = {
           message: "User or password incorrect.",
         });
       }
+
       const aux = user.password.filter((signUp)=>signUp.from===from )
-      const isPasswordCorrect  = await bcryptjs.compare(password, ...aux[0].password)
+      console.log(password, aux[0].password)
+      const isPasswordCorrect  = await bcryptjs.compare(password, aux[0].password)
+      
       const dataUser = {
         id: user._id,
         fullName: user.fullName,
@@ -105,7 +106,7 @@ const userController = {
 
 
       if (userExist) {
-          if (userExist.password.filter((signUp)=>signUp.method===from)!==-1) {
+          if (userExist.password.filter((signUp)=>signUp.from===from)!==-1) {
           res.json({
             success: false,
             from: from,
