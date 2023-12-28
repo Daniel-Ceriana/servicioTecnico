@@ -281,18 +281,25 @@ const userController = {
         // si todo es valido, manda mail confirmando
         console.log(req.body)
         if(req.body.password && req.body.uniqueString2){     
-
+          // hashea la contraseña nueva 
           const newPassword = await bcryptjs.hash(req.body.password, 10); 
+          //#region optimizable?
+          // el array de contraseñas es para que se puedan en un futuro loguear por redes sociales sin cambiar toda la estructura del modelo
+          // busca al usuario
           const user=await User.findOne({ uniqueString2:req.body.uniqueString2 });
+          // busca la contraseña correcta dentro del array de contraseñas
+          // ya que tiene un objeto user, le modifica la contraseña correcta y deja las otras posibles intactas
           user.password.map((signUp)=>{if(signUp.from==="signUp-form"){signUp.password=newPassword}})
-         await User.findOneAndUpdate({uniqueString2:req.body.uniqueString2},{password:user.password},{ new: true})
-         
+          // busca otra vez al usuario y le actualiza todo el array de contraseñas.
+          await User.findOneAndUpdate({uniqueString2:req.body.uniqueString2},{password:user.password},{ new: true})
+         //#endregion
 
           valid=true
+          // agregar response {datos de usuario para redux}
         return res.json({
           success:true,
           message:"Password restored.",
-          response:{user}
+          response:{}
           // response:{dataUser} 
         })
         }
