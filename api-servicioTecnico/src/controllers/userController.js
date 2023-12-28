@@ -259,7 +259,7 @@ const userController = {
             changePasswordToken:token
           },
           { new: true })
-          console.log("ASDSAD")
+            
         sendMailMethod.restorePassword(req.query.email,uniqueString2)
         valid=true;
         return res.json({
@@ -269,11 +269,24 @@ const userController = {
         })
       }
       if(req.query.string2){
-        console.log("ASDASD")
-        //validar el unique string 2 y redireccionar a pagina restore password. Mandar un token que lo valide.
         
-        valid=true
-        return res.redirect(`${process.env.FRONT_BASE_URL}/restorePassword`);
+        // COMPARAR el string 2 con el uniqueString2 del token guardado en el usuario. al mismo tiempo verificar que todo del token sea valido.-> redireccionar al front/restorePassword/uniqueString2
+        const user= await User.findOne({uniqueString2:req.query.string2})
+        console.log(user)
+        try {
+          await jwt.verify(user.changePasswordToken, process.env.SECRET_TOKEN,(err,decoded)=>{
+            if(req.query.string2===decoded.uniqueString2){
+              valid=true
+              return res.redirect(`${process.env.FRONT_BASE_URL}/restorePassword/${decoded.uniqueString2}`);
+            }
+            if(err){
+                console.log(err)
+              }
+            })  
+        } catch (error) {
+          console.log(error)
+        }
+        
       }
       
       if(req.body){
@@ -295,7 +308,7 @@ const userController = {
           // ya que tiene un objeto user, le modifica la contraseña correcta y deja las otras posibles intactas
           user.password.map((signUp)=>{if(signUp.from==="signUp-form"){signUp.password=newPassword}})
           // busca otra vez al usuario y le actualiza todo el array de contraseñas.
-          await User.findOneAndUpdate({uniqueString2:req.body.uniqueString2},{password:user.password},{ new: true})
+          await User.findOneAndUpdate({uniqueString2:req.body.uniqueString2},{password:user.password,},{ new: true})
          //#endregion
 
           valid=true
