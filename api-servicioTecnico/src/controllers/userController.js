@@ -287,6 +287,10 @@ const userController = {
           // el array de contraseñas es para que se puedan en un futuro loguear por redes sociales sin cambiar toda la estructura del modelo
           // busca al usuario
           const user=await User.findOne({ uniqueString2:req.body.uniqueString2 });
+
+          user.changePasswordToken
+
+
           // busca la contraseña correcta dentro del array de contraseñas
           // ya que tiene un objeto user, le modifica la contraseña correcta y deja las otras posibles intactas
           user.password.map((signUp)=>{if(signUp.from==="signUp-form"){signUp.password=newPassword}})
