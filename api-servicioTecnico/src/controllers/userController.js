@@ -268,27 +268,10 @@ const userController = {
           response:{email:req.query,user}
         })
       }
-      if(req.query.string2){
-        
-        // COMPARAR el string 2 con el uniqueString2 del token guardado en el usuario. al mismo tiempo verificar que todo del token sea valido.-> redireccionar al front/restorePassword/uniqueString2
-        const user= await User.findOne({uniqueString2:req.query.string2})
-        console.log(user)
-        try {
-          await jwt.verify(user.changePasswordToken, process.env.SECRET_TOKEN,(err,decoded)=>{
-            if(req.query.string2===decoded.uniqueString2){
-              valid=true
-              return res.redirect(`${process.env.FRONT_BASE_URL}/restorePassword/${decoded.uniqueString2}`);
-            }
-            if(err){
-                console.log(err)
-              }
-            })  
-        } catch (error) {
-          console.log(error)
-        }
-        
-      }
       
+      
+
+
       if(req.body){
         // recibe password y el unique string 2 para buscar al usuario. chequea el token creado anteriormente(guardado en el usuario) para validar
         // si todo es valido, manda mail confirmando
@@ -300,15 +283,35 @@ const userController = {
           // el array de contraseñas es para que se puedan en un futuro loguear por redes sociales sin cambiar toda la estructura del modelo
           // busca al usuario
           const user=await User.findOne({ uniqueString2:req.body.uniqueString2 });
-
-          user.changePasswordToken
-
-
+          // chequea que el token dentro del usuario sea valido
+          try {
+            let jtwDecoded;
+            await jwt.verify(user.changePasswordToken, process.env.SECRET_TOKEN,(error,decoded)=>{
+              if(req.query.string2===decoded.uniqueString2){
+                jtwDecoded=decoded;
+              }   
+              if(error){
+                  console.log(error)
+                  return res.json({
+                    success: false,
+                    from:"controller",
+                    message: "Not authorized",
+                  })
+                }
+              })  
+          } catch (error) {
+            console.log(error)
+            return res.json({
+              success: false,
+              from:"controller",
+              message: "Something went wrong, please start the process agains",
+            })
+          }
           // busca la contraseña correcta dentro del array de contraseñas
           // ya que tiene un objeto user, le modifica la contraseña correcta y deja las otras posibles intactas
           user.password.map((signUp)=>{if(signUp.from==="signUp-form"){signUp.password=newPassword}})
           // busca otra vez al usuario y le actualiza todo el array de contraseñas.
-          await User.findOneAndUpdate({uniqueString2:req.body.uniqueString2},{password:user.password,},{ new: true})
+          await User.findOneAndUpdate({uniqueString2:req.body.uniqueString2},{password:user.password,changePasswordToken:"",uniqueString2:""},{ new: true})
          //#endregion
 
           valid=true
