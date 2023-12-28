@@ -1,4 +1,4 @@
-<mxfile host="app.diagrams.net" modified="2023-12-28T13:13:29.355Z" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36" etag="fJL8el5id7ffgQFODfQY" version="22.1.15" type="github">
+<mxfile host="app.diagrams.net" modified="2023-12-28T13:15:29.191Z" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36" etag="QJuQPZ49Ovy1KwsgegOE" version="22.1.15" type="github">
   <diagram name="Página-1" id="SS0KaEW65HmHxnwdi14k">
     <mxGraphModel dx="1434" dy="1941" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
       <root>
@@ -212,8 +212,8 @@
         <mxCell id="REtOvarT4Qf_jJN79Ttz-153" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" parent="1" source="REtOvarT4Qf_jJN79Ttz-94" target="REtOvarT4Qf_jJN79Ttz-112" edge="1">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="REtOvarT4Qf_jJN79Ttz-94" value="/auth/RestorePassword?id" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1" vertex="1">
-          <mxGeometry x="1002.5" y="540" width="145" height="30" as="geometry" />
+        <mxCell id="REtOvarT4Qf_jJN79Ttz-94" value="/auth/RestorePassword?email" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1" vertex="1">
+          <mxGeometry x="1002.5" y="540" width="167.5" height="30" as="geometry" />
         </mxCell>
         <mxCell id="REtOvarT4Qf_jJN79Ttz-148" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="1" source="REtOvarT4Qf_jJN79Ttz-97" target="REtOvarT4Qf_jJN79Ttz-109" edge="1">
           <mxGeometry relative="1" as="geometry" />
@@ -356,7 +356,7 @@
         <mxCell id="REtOvarT4Qf_jJN79Ttz-175" value="RestorePassword" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1" vertex="1">
           <mxGeometry x="1707" y="550" width="106.5" height="30" as="geometry" />
         </mxCell>
-        <mxCell id="REtOvarT4Qf_jJN79Ttz-176" value="id: -&amp;gt; create uniqueString2 in user and send mail&lt;br&gt;string2: -&amp;gt; Redirect to change Password view" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1" vertex="1">
+        <mxCell id="REtOvarT4Qf_jJN79Ttz-176" value="email: -&amp;gt; create uniqueString2 in user and send mail&lt;br&gt;string2: -&amp;gt; Redirect to change Password view" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1" vertex="1">
           <mxGeometry x="1707" y="592.5" width="296.5" height="30" as="geometry" />
         </mxCell>
         <mxCell id="WbrGpXY_wd8ar3gM74yv-37" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#FF99CC;entryX=0.007;entryY=0.217;entryDx=0;entryDy=0;entryPerimeter=0;" parent="1" source="REtOvarT4Qf_jJN79Ttz-177" target="WbrGpXY_wd8ar3gM74yv-7" edge="1">
