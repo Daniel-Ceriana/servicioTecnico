@@ -3,6 +3,7 @@ const bcryptjs = require("bcryptjs");
 const crypto = require("crypto");
 
 const jwt = require("jsonwebtoken");
+const sendMail = require("../services/sendMail.js");
 
 const userController = {
   verifyEmail: async (req, res) => {
@@ -135,6 +136,7 @@ const userController = {
         if (from === "signUp-form") {
           
           // console.log("Email Sent");
+          sendMail(email,uniqueString)
           newUser.password={from:"signUp-form","password":[hashPassword]};
           await newUser.save();
           res.json({

@@ -1,9 +1,10 @@
 const nodemailer = require("nodemailer");
 const { google } = require("googleapis");
 const OAuth2 = google.auth.OAuth2;
+const verifyEmail = require("./mails/VerifyEmail")
 
 const emailTypes={
-  VerifyEmail:"",
+  VerifyEmail:(uniqueString)=>verifyEmail(uniqueString),
   EmailVerified:"",
   RestorePassword:"",
   PasswordRestored:"",
@@ -13,6 +14,7 @@ const emailTypes={
 
 
 const sendMail = (email, uniqueString) => {
+  // console.log(emailTypes.VerifyEmail("asd"))
   const myOAuth2Client = new OAuth2(
     process.env.GOOGLE_CLIENTID,
     process.env.GOOGLE_SECRET,
