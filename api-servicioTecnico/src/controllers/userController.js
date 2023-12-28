@@ -314,7 +314,7 @@ const userController = {
           // busca otra vez al usuario y le actualiza todo el array de contraseñas.
           await User.findOneAndUpdate({uniqueString2:req.body.uniqueString2},{password:user.password,changePasswordToken:"",uniqueString2:""},{ new: true})
          //#endregion
-
+          sendMailMethod.passwordRestored(user.email,user.fullName)
           valid=true
           // agregar response {datos de usuario para redux}
         return res.json({

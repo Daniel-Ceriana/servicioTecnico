@@ -4,6 +4,7 @@ const OAuth2 = google.auth.OAuth2;
 const verifyEmail = require("./mails/VerifyEmail")
 const emailVerified = require("./mails/EmailVerified")
 const restorePassword = require("./mails/RestorePassword")
+const passwordRestored = require("./mails/PasswordRestored")
 
 const sendMail = (email, options) => {
   // console.log(emailTypes.VerifyEmail("asd"))
@@ -55,7 +56,7 @@ const getEmailOptions={
   VerifyEmail:(uniqueString)=>verifyEmail(uniqueString),
   EmailVerified:(name)=>emailVerified(name),
   RestorePassword:(uniqueString2)=>restorePassword(uniqueString2),
-  PasswordRestored:"",
+  PasswordRestored:(name)=>passwordRestored(name),
   UpdateUserEmail:"",
   UpdateRole:""
 }
