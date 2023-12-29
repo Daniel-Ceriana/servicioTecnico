@@ -305,7 +305,7 @@ const userController = {
             return res.json({
               success: false,
               from:"controller",
-              message: "Something went wrong, please start the process agains",
+              message: "Something went wrong, please start the process again",
             })
           }
           // busca la contraseña correcta dentro del array de contraseñas

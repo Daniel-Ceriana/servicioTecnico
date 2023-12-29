@@ -1,6 +1,6 @@
 const express = require("express");
 const userRouter = express.Router();
-const { signUpValidator, signInValidator } = require("../config/validator");
+const { signUpValidator, signInValidator,restorePasswordValidator } = require("../config/validator");
 const passport = require("../config/passport");
 
 const userController = require("../controllers/userController");
@@ -18,7 +18,7 @@ userRouter.put("/auth/:id", userController.updateUser);
 
 // password
 userRouter.get("/auth/RestorePassword",userController.restorePassword)
-userRouter.post("/auth/RestorePassword",userController.restorePassword)
+userRouter.post("/auth/RestorePassword",restorePasswordValidator,userController.restorePassword)
 
 //test
 userRouter.get("/auth/testFindUsers",userController.testFindUsers)
