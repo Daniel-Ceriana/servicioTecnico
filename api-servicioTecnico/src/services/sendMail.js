@@ -71,8 +71,8 @@ const sendMailMethod={
   restorePassword:(email,uniqueString2) => {
     sendMail(email,getEmailOptions.RestorePassword(uniqueString2))
   },
-  passwordRestored:(email,uniqueString) => {
-    sendMail(email,getEmailOptions.PasswordRestored(uniqueString))
+  passwordRestored:(email,name) => {
+    sendMail(email,getEmailOptions.PasswordRestored(name))
   },
   updateUserEmail:(email,uniqueString) => {
     sendMail(email,getEmailOptions.UpdateUserEmail(uniqueString))
