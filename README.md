@@ -10,3 +10,6 @@ Algunos de los paquetes utilizados: JWT, passport, bcryptjs, nodemailer, mongoos
 Si bien el propósito principal es aprender tecnologías como docker, nginx, entre otras, también se le hizo mucho énfasis a que la app sea completa y funcione correctamente. 
   Para esto se tuvo que implementar lógica de manejo de usuarios, roles, envíos de mails de confirmación, restauración de contraseña, etc.
   Además, los datos de los "trabajos", o "tareas" se controlan mediante un CRUD que utiliza passport para verificar que el usuario que intenta realizar alguna acción, lo tenga permitido.
+
+
+Ahora mismo el desarrollo esta concentrado en la rama "back". 
