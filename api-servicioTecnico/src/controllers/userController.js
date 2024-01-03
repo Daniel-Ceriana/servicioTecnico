@@ -215,11 +215,19 @@ const userController = {
     try {
       // sacar el id desde el token
       // actualizar token
-      console.log("llega 1");
+      let changes;
+      if(req.body.email){
+        const uniqueString = crypto.randomBytes(15).toString("hex");
+        changes.uniqueString=uniqueString;
+        sendMailMethod.verifyEmail(req.body.email,uniqueString)
+      }
+      if(req.body.fullName){
+        changes.fullName=req.body.fullName;
+      }
 
       const user = await User.findOneAndUpdate(
         { _id: req.params.id },
-        { ...req.body },
+        { changes },
         { new: true }
       );
       return res.json({
