@@ -296,9 +296,11 @@ const userController = {
           try {
             let jtwDecoded;
             await jwt.verify(user.changePasswordToken, process.env.SECRET_TOKEN,(error,decoded)=>{
+              // abajo innecesario
               if(req.query.string2===decoded.uniqueString2){
                 jtwDecoded=decoded;
               }   
+              // arriba innecesario
               if(error){
                   console.log(error)
                   return res.json({
