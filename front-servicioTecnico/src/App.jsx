@@ -8,6 +8,7 @@ import "react-toastify/dist/ReactToastify.css";
 import Nav from "./components/Nav/Nav"
 // import Footer from "./components/Footer/Footer";
 import { useEffect } from "react";
+import SignUp from "./components/User/SignUp/SignUp";
 // import { useSelector, useDispatch } from "react-redux";
 // import { verifyToken } from "./redux/actions/userActions";
 
@@ -24,6 +25,7 @@ function App() {
       <Routes>
         {" "}
         <Route path="*" element={<Landing />} />{" "}
+        <Route path="/SignUp" element={<SignUp />} />{" "}
       </Routes>{" "}
       {/* <Footer /> */}
       <ToastContainer
