@@ -1,13 +1,13 @@
 const express = require("express");
 const userRouter = express.Router();
-const { signUpValidator, signInValidator } = require("../config/validator");
+const { signUpValidator, signInValidator,restorePasswordValidator } = require("../config/validator");
 const passport = require("../config/passport");
 
 const userController = require("../controllers/userController");
 
 userRouter.post("/auth/signUp", signUpValidator, userController.signUp);
 userRouter.post("/auth/signIn", signInValidator, userController.signIn);
-userRouter.get("/auth/verifyEmail/:string", userController.verifyUserAccount);
+userRouter.get("/auth/verifyEmail/:string", userController.verifyEmail);
 userRouter.get(
   "/auth/verifyToken",
   passport.authenticate("jwt", { session: false }),
@@ -15,5 +15,13 @@ userRouter.get(
 );
 userRouter.put("/auth/:id", userController.updateUser);
 // -----------------------token
+
+// password
+userRouter.get("/auth/RestorePassword",userController.restorePassword)
+userRouter.post("/auth/RestorePassword",restorePasswordValidator,userController.restorePassword)
+
+//test
+userRouter.get("/auth/testFindUsers",userController.testFindUsers)
+
 
 module.exports = userRouter;

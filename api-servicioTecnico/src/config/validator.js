@@ -6,7 +6,6 @@ const signUpValidator = (req, res, next) => {
     email: joi.string().email({ minDomainSegments: 2 }).required().messages({
       "string.email": "wrong email format",
     }),
-    // dni: joi.number().required(),
     password: joi
       .string()
       .min(8)
@@ -94,5 +93,35 @@ const updateUser = (req, res, next) => {
 
   next();
 };
+const restorePasswordValidator = (req, res, next) => {
+  console.log(req.uniqueString2)
+  const schema = joi.object({
+    uniqueString2: joi.string().required(),
+    password: joi
+      .string()
+      .min(8)
+      .max(30)
+      .pattern(new RegExp(/(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9])/))
+      .required()
+      .messages({
+        "string.min": "password must have a minimum of 8 characters debe",
+        "string.max": "password must have a maximum of 30 characters",
+        "string.pattern.base":
+          "password must have at least one uppercase, lowercase and number",
+      }),
+    // from: joi.string().required(),
+    // aplication: joi.string().required(),
+  });
+  const validation = schema.validate(req.body, { abortEarly: false });
+  if (validation.error) {
+    return res.json({
+      success: false,
+      from: "validator",
+      message: validation.error.details,
+    });
+  }
 
-module.exports = { signUpValidator, signInValidator, updateUser };
+  next();
+};
+
+module.exports = { signUpValidator, signInValidator, updateUser,restorePasswordValidator };

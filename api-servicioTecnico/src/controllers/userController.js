@@ -3,20 +3,25 @@ const bcryptjs = require("bcryptjs");
 const crypto = require("crypto");
 
 const jwt = require("jsonwebtoken");
+const sendMailMethod = require("../services/sendMail.js");
 
 const userController = {
-  verifyUserAccount: async (req, res) => {
+  verifyEmail: async (req, res) => {
     try {
-      await User.findOneAndUpdate(
+      const user = await User.findOneAndUpdate(
         { uniqueString: req.params.string },
         { emailVerification: true }
       );
-      return res.redirect("http://localhost:3000/login");
+      console.log(user)
+      sendMailMethod.emailVerified(user.email,user.fullName)
+      return res.redirect(`${process.env.FRONT_BASE_URL}/login`);
     } catch (error) {
+      console.log(error)
       return res.json({
         success: false,
         from: "user verification",
         message: "Error: user not found",
+  
       });
     }
   },
@@ -29,12 +34,10 @@ const userController = {
         message: "Error: no data found",
       });
     }
-    console.log(req.body);
     const { email, password, from } = req.body.userData;
 
     try {
       const user = await User.findOne({ email });
-
       if (!user) {
         return res.json({
           success: false,
@@ -43,47 +46,19 @@ const userController = {
         });
       }
 
-      const isPasswordCorrect = user.password.filter((pass) =>
-        bcryptjs.compareSync(password, pass)
-      );
-      console.log(isPasswordCorrect);
-      console.log(bcryptjs.compareSync(password, user.password[0]));
+      const aux = user.password.filter((signUp)=>signUp.from===from )
+      console.log(password, aux[0].password)
+      const isPasswordCorrect  = await bcryptjs.compare(password, aux[0].password)
+      
       const dataUser = {
         id: user._id,
         fullName: user.fullName,
         email: user.email,
-        cart: user.cart,
         role: user.role,
-        dni: user.dni || "",
-        cellphone: user.cellphone || "",
-        street: user.street || "",
-        city: user.city || "",
-        state: user.state || "",
-        postalCode: user.postalCode || "",
-        country: user.country || "",
         from: from,
       };
 
-      if (isPasswordCorrect.length > 0) {
-        const aux = user.from.filter((from) => from == "google");
-        if (from !== "signUp-form" && aux.length == 0) {
-          const hashPassword = bcryptjs.hashSync(password, 10);
-          user.from.push(from);
-          user.password.push(hashPassword);
-
-          await user.save();
-          const token = jwt.sign(dataUser, process.env.SECRET_TOKEN, {
-            expiresIn: "1h",
-          });
-          res.json({
-            // agregar email verification true
-            success: true,
-            from,
-            response: { token, dataUser },
-            message: from + " added to your signing in methods",
-          });
-        } else {
-          // si algo se rompe, poner {...dataUser}
+      if (isPasswordCorrect) {
           const token = jwt.sign(dataUser, process.env.SECRET_TOKEN, {
             expiresIn: "1h",
           });
@@ -93,7 +68,7 @@ const userController = {
             response: { token, dataUser },
             message: "Welcome back, " + dataUser.fullName,
           });
-        }
+        
       } else {
         res.json({
           success: false,
@@ -117,76 +92,92 @@ const userController = {
     if (!req.body.userData) {
       return res.json({
         success: false,
-        from: from,
+        from: "Sign Up controller",
         message: "Error: no data found",
       });
     }
 
-    const { fullName, dni, email, password, from, aplication } =
+    const { fullName, email, password, from, aplication } =
       req.body.userData;
-    const hashPassword = bcryptjs.hashSync(password, 10);
-    try {
+      try {
+      const hashPassword =await bcryptjs.hash(password, 10);
+
       const userExist = await User.findOne({ email });
 
+
       if (userExist) {
-        if (userExist.from.indexOf(from) !== -1) {
+          if (userExist.password.filter((signUp)=>signUp.from===from)!==-1) {
           res.json({
             success: false,
             from: from,
             message: "You already have an account, please, sign in instead.",
           });
-        } else {
-          userExist.from.push(from);
-          userExist.password.push(hashPassword);
+        } 
+        //------------------------------------------------------------------------ Multiple login options
+        // else {
+        //   userExist.from.push(from);
+        //   userExist.password.push(hashPassword);
 
-          await userExist.save();
+        //   await userExist.save();
 
-          res.json({
-            success: true,
-            from: from,
-            message: from + " was added to your sign in methods.",
-          });
-        }
+        //   res.json({
+        //     success: true,
+        //     from: from,
+        //     message: from + " was added to your sign in methods.",
+        //   });
+        // }
+
       } else {
+
         const newUser = new User({
           fullName,
-          dni,
           email,
-          password: [hashPassword],
-          from: from,
+          password:{},
           aplication: aplication,
           uniqueString: uniqueString,
           emailVerification: false,
           role: "user",
         });
         if (from === "signUp-form") {
-          console.log("Email Sent");
+          
+          // console.log("Email Sent");
+          sendMailMethod.verifyEmail(email,uniqueString)
+          newUser.password={from:"signUp-form","password":hashPassword};
           await newUser.save();
           res.json({
             success: true,
-            from: from,
+            from: "controller",
             message:
               "User created and added, check your email to verify account ",
           });
           // 9:54
-        } else {
-          // if it's coming from social network
-          // create new user with no need of verification
-          // const socialNetworks = ["google","facebook"]...;
-          // for(){if(socialNetworks[i]){
-          // crear usuario ya verificado
-          //   [google]
-          // }}
-          newUser.emailVerification = true;
-          await newUser.save();
-
-          res.json({
-            success: true,
-            from: from,
-            message:
-              "User created and added " + from + " to your sign in methods",
-          });
+        } else{
+          console.log(error);
+      res.json({
+        success: false,
+        from: "controller",
+        message: "something's gone wrong with sign Up method, try again in a few minutes",
+      });
         }
+        //---------------------------------------------------------- might support later
+        // else {
+        //   // if it's coming from social network
+        //   // create new user with no need of verification
+        //   // const socialNetworks = ["google","facebook"]...;
+        //   // for(){if(socialNetworks[i]){
+        //   // crear usuario ya verificado
+        //   //   [google]
+        //   // }}
+        //   newUser.emailVerification = true;
+        //   await newUser.save();
+
+        //   res.json({
+        //     success: true,
+        //     from: from,
+        //     message:
+        //       "User created and added " + from + " to your sign in methods",
+        //   });
+        // }
       }
     } catch (error) {
       console.log(error);
@@ -208,22 +199,8 @@ const userController = {
           email: req.user.email,
           fullName: req.user.fullName,
           role: req.user.role,
-          cart: req.user.cart,
-          dni: req.user.dni || "",
-          cellphone: req.user.cellphone || "",
-          street: req.user.street || "",
-          city: req.user.city || "",
-          state: req.user.state || "",
-          postalCode: req.user.postalCode || "",
-          country: req.user.country || "",
           from: req.user.from,
-          // dni
-          // cellphone
-          // street
-          // city
-          // state
-          // postalCode
-          // country
+
         },
         message: "Welcome back, " + req.user.fullName,
       });
@@ -238,11 +215,19 @@ const userController = {
     try {
       // sacar el id desde el token
       // actualizar token
-      console.log("llega 1");
+      let changes;
+      if(req.body.email){
+        const uniqueString = crypto.randomBytes(15).toString("hex");
+        changes.uniqueString=uniqueString;
+        sendMailMethod.verifyEmail(req.body.email,uniqueString)
+      }
+      if(req.body.fullName){
+        changes.fullName=req.body.fullName;
+      }
 
       const user = await User.findOneAndUpdate(
         { _id: req.params.id },
-        { ...req.body },
+        { changes },
         { new: true }
       );
       return res.json({
@@ -253,14 +238,6 @@ const userController = {
             email: user.email,
             fullName: user.fullName,
             role: user.role,
-            cart: user.cart,
-            dni: user.dni || "",
-            cellphone: user.cellphone || "",
-            street: user.street || "",
-            city: user.city || "",
-            state: user.state || "",
-            postalCode: user.postalCode || "",
-            country: user.country || "",
             from: user.from,
             password: user.password,
           },
@@ -274,6 +251,128 @@ const userController = {
       });
     }
   },
+  restorePassword: async (req,res)=>{
+    let valid=false;
+    try {
+      console.log(req.query)
+      if(req.query.email){
+        // crear uniqueString 2 en user. Puede ser token para que tenga un tiempo de validez
+       const uniqueString2 = crypto.randomBytes(15).toString("hex");
+
+        const token = jwt.sign({email:req.query.email,uniqueString2}, process.env.SECRET_TOKEN, {
+          expiresIn: 600,
+        });
+        const user = await User.findOneAndUpdate( 
+          { email:req.query.email },
+          { uniqueString2,
+            changePasswordToken:token
+          },
+          { new: true })
+            
+        sendMailMethod.restorePassword(req.query.email,uniqueString2)
+        valid=true;
+        return res.json({
+          success:true,
+          message:"Check your inbox to restore password.",
+          response:{email:req.query,user}
+        })
+      }
+      
+      
+
+
+      if(req.body){
+        // recibe password y el unique string 2 para buscar al usuario. chequea el token creado anteriormente(guardado en el usuario) para validar
+        // si todo es valido, manda mail confirmando
+        console.log(req.body)
+        if(req.body.password && req.body.uniqueString2){     
+          // hashea la contraseña nueva 
+          const newPassword = await bcryptjs.hash(req.body.password, 10); 
+          //#region optimizable?
+          // el array de contraseñas es para que se puedan en un futuro loguear por redes sociales sin cambiar toda la estructura del modelo
+          // busca al usuario
+          const user=await User.findOne({ uniqueString2:req.body.uniqueString2 });
+          // chequea que el token dentro del usuario sea valido
+          try {
+            let jtwDecoded;
+            await jwt.verify(user.changePasswordToken, process.env.SECRET_TOKEN,(error,decoded)=>{
+              // abajo innecesario
+              if(req.query.string2===decoded.uniqueString2){
+                jtwDecoded=decoded;
+              }   
+              // arriba innecesario
+              if(error){
+                  console.log(error)
+                  return res.json({
+                    success: false,
+                    from:"controller",
+                    message: "Not authorized",
+                  })
+                }
+              })  
+          } catch (error) {
+            console.log(error)
+            return res.json({
+              success: false,
+              from:"controller",
+              message: "Something went wrong, please start the process again",
+            })
+          }
+          // busca la contraseña correcta dentro del array de contraseñas
+          // ya que tiene un objeto user, le modifica la contraseña correcta y deja las otras posibles intactas
+          user.password.map((signUp)=>{if(signUp.from==="signUp-form"){signUp.password=newPassword}})
+          // busca otra vez al usuario y le actualiza todo el array de contraseñas.
+          await User.findOneAndUpdate({uniqueString2:req.body.uniqueString2},{password:user.password,changePasswordToken:"",uniqueString2:""},{ new: true})
+         //#endregion
+          sendMailMethod.passwordRestored(user.email,user.fullName)
+          valid=true
+          // agregar response {datos de usuario para redux}
+        return res.json({
+          success:true,
+          message:"Password restored.",
+          response:{}
+          // response:{dataUser} 
+        })
+        }
+        
+      }
+
+
+
+      // if nothing is valid then
+      if(!valid){
+        return res.json({
+          success: false,
+          from:"controller",
+          message: "Something went wrong, try again later",
+        });
+      }
+      
+      
+      
+    } catch (error) {
+      console.log(error)
+
+      return res.json({
+        success: false,
+        from:"controller",
+        message: "Something went wrong while restoring password, try again later",
+      });
+    }
+  },
+  changeRole: async (req,res)=>{
+
+  },
+  testFindUsers:async(req,res)=>{
+    try {
+      const users = await User.find();
+      return res.json({
+        users
+      })
+    } catch (error) {
+      console.log(error)
+    }
+  }
 };
 
 module.exports = userController;
