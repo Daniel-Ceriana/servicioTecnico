@@ -11,6 +11,7 @@ import { useEffect } from "react";
 import SignUp from "./components/User/SignUp/SignUp";
 import SignIn from "./components/User/SignIn/SignIn";
 import RestorePassword from "./components/User/RestorePassword/RestorePassword";
+import UpdateUser from "./components/User/UpdateUser/UpdateUser";
 // import { useSelector, useDispatch } from "react-redux";
 // import { verifyToken } from "./redux/actions/userActions";
 
@@ -29,7 +30,10 @@ function App() {
         <Route path="*" element={<Landing />} />{" "}
         <Route path="/SignUp" element={<SignUp />} />{" "}
         <Route path="/SignIn" element={<SignIn />} />{" "}
+        {/* user tiene que existir, tiene que haber mandado solicitud para restorePassword */}
         <Route path="/restorePassword/:uniqueString" element={<RestorePassword />} />{" "}
+        {/* user tiene que existir */}
+        <Route path="/user/updateUser" element={<UpdateUser />} />{" "}
 
       </Routes>{" "}
       {/* <Footer /> */}
