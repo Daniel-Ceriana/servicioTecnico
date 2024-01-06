@@ -7,7 +7,7 @@ require("./src/config/db");
 
 app.use(express.json());
 const corsOptions = {
-  origin: process.env.CLIENT_ORIGIN || "http://localhost:4000"
+  origin: process.env.CLIENT_ORIGIN || "http://localhost:3000"
 };
 app.use(cors(corsOptions));
 app.use(passport.initialize());
