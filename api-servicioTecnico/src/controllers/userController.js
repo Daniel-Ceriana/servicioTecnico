@@ -294,13 +294,8 @@ const userController = {
           const user=await User.findOne({ uniqueString2:req.body.uniqueString2 });
           // chequea que el token dentro del usuario sea valido
           try {
-            let jtwDecoded;
             await jwt.verify(user.changePasswordToken, process.env.SECRET_TOKEN,(error,decoded)=>{
-              // abajo innecesario
-              if(req.query.string2===decoded.uniqueString2){
-                jtwDecoded=decoded;
-              }   
-              // arriba innecesario
+
               if(error){
                   console.log(error)
                   return res.json({
