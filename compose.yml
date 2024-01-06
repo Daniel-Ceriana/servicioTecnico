@@ -32,8 +32,10 @@ services:
     build:
       context: ./front-servicioTecnico
       target: dev
+    env_file: ./.env
     environment:
       NODE_ENV: development
+      BACK_BASE_URL: $BACK_BASE_URL
     volumes:
       # bind mount -> for vite to restart when changes made to code
       - ./front-servicioTecnico/src:/front-servicioTecnico/src
