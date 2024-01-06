@@ -10,6 +10,7 @@ import Nav from "./components/Nav/Nav"
 import { useEffect } from "react";
 import SignUp from "./components/User/SignUp/SignUp";
 import SignIn from "./components/User/SignIn/SignIn";
+import RestorePassword from "./components/User/RestorePassword/RestorePassword";
 // import { useSelector, useDispatch } from "react-redux";
 // import { verifyToken } from "./redux/actions/userActions";
 
@@ -28,6 +29,7 @@ function App() {
         <Route path="*" element={<Landing />} />{" "}
         <Route path="/SignUp" element={<SignUp />} />{" "}
         <Route path="/SignIn" element={<SignIn />} />{" "}
+        <Route path="/restorePassword/:uniqueString" element={<RestorePassword />} />{" "}
 
       </Routes>{" "}
       {/* <Footer /> */}
