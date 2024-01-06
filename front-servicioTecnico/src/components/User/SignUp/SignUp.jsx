@@ -11,12 +11,12 @@ const handleSubmit=(e)=>{
 
 
 const postData=async(formData)=>{
-const userData={...formData,from:"signUp-form",aplication:"ServicioTecnico"}
-const res=await axios.post(`${BACK_BASE_URL}/api/auth/signUp`,{userData})
-if(!res.data.success){
-    // mostrar pop up de error
-    console.log(res.data.message)
-}
+    const userData={...formData,from:"signUp-form",aplication:"ServicioTecnico"}
+    const res=await axios.post(`${BACK_BASE_URL}/api/auth/signUp`,{userData})
+    if(!res.data.success){
+        // mostrar pop up de error
+        console.log(res.data.message)
+    }
 }
 
 function SignUp() {
