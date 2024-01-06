@@ -16,7 +16,9 @@ const postData=async(formData)=>{
     if(!res.data.success){
         // mostrar pop up de error
         console.log(res.data.message)
-}
+    }
+    console.log(res.data.response.token)
+
 }
 
 function SignIn() {
