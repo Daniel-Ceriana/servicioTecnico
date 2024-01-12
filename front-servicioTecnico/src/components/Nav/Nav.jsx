@@ -1,5 +1,6 @@
 import { useEffect } from "react";
 import "./nav.css";
+import {Link as LinkRouter} from "react-router-dom"
 function Nav() {
 
   useEffect(() => {
@@ -13,8 +14,15 @@ function Nav() {
             <li>Done tasks</li>
             <li>Admin Panel</li>
         </ul>
-        <button>Sign In</button>
-        <button>Sign Up</button>
+        <div className="dev">
+        <LinkRouter to="/signin"><button>Sign In</button></LinkRouter>
+        <LinkRouter to="/signup"><button>Sign Up</button></LinkRouter>
+        <LinkRouter to="/user/updateUser"><button>updateUser</button></LinkRouter>
+        <LinkRouter to="/changeRole"><button>Change role</button></LinkRouter>
+        <LinkRouter to="/restorePassword/"><button>Restore password</button></LinkRouter>
+        <LinkRouter to="/"><button>Home</button></LinkRouter>
+        </div>
+        
     </div>
   );
 }

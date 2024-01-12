@@ -5,3 +5,14 @@ ul{
     display:flex;
     gap: 20px;
 }
+.dev{
+    display: flex;
+    gap:20px
+}
+.Nav{
+    display: flex;
+    gap: 40px;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}

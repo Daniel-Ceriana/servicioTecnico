@@ -7,12 +7,7 @@ function Landing() {
     }, []);
     return (
       <div className="Landing">
-          <ul>
-              <li>hola</li>
-              <li>hola</li>
-              <li>hola</li> 
-              <li>hola</li> 
-          </ul>
+      <h1>HOME</h1>
       </div>
     );
   }
