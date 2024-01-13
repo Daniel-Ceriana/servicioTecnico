@@ -1,5 +1,6 @@
 import React from "react";
 import axios from "axios"
+import { toast } from "react-toastify";
 const BACK_BASE_URL = import.meta.env.BACK_BASE_URL || "http://localhost:4000" 
 
 const handleSubmit=(e)=>{
@@ -16,6 +17,16 @@ const postData=async(formData)=>{
     if(!res.data.success){
         // mostrar pop up de error
         console.log(res.data.message)
+        toast.error(res.data.message, {
+            position: "bottom-right",
+            autoClose: 5000,
+            hideProgressBar: true,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "dark",
+          });
     }
     console.log(res.data.response.token)
 
