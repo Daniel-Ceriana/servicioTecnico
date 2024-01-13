@@ -19,7 +19,7 @@ const postData=async(formData)=>{
         console.log(res.data.message)
     }
     console.log(res.data.response.token)
-    
+    console.log(res.data.message)
 }
 
 function RestorePasswordTEST() {

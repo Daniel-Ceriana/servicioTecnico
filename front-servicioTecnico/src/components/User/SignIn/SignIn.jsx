@@ -29,7 +29,16 @@ const postData=async(formData)=>{
           });
     }
     console.log(res.data.response.token)
-
+    toast.success(res.data.message, {
+        position: "bottom-right",
+        autoClose: 5000,
+        hideProgressBar: true,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "dark",
+        });
 }
 
 function SignIn() {
