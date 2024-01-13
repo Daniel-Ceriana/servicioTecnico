@@ -262,7 +262,7 @@ const userController = {
         const token = jwt.sign({email:req.query.email,uniqueString2}, process.env.SECRET_TOKEN, {
           expiresIn: 600,
         });
-        const user = await User.findOneAndUpdate( 
+        await User.findOneAndUpdate( 
           { email:req.query.email },
           { uniqueString2,
             changePasswordToken:token
@@ -274,7 +274,7 @@ const userController = {
         return res.json({
           success:true,
           message:"Check your inbox to restore password.",
-          response:{email:req.query,user}
+          response:{email:req.query}
         })
       }
       
