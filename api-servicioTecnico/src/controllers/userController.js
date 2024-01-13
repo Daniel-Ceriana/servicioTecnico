@@ -14,7 +14,7 @@ const userController = {
       );
       console.log(user)
       sendMailMethod.emailVerified(user.email,user.fullName)
-      return res.redirect(`${process.env.FRONT_BASE_URL}/login`);
+      return res.redirect(`${process.env.FRONT_BASE_URL}/signIn`);
     } catch (error) {
       console.log(error)
       return res.json({
