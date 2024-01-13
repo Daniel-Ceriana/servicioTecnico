@@ -1,8 +1,6 @@
 import React from "react";
 import axios from "axios"
 import { toast } from "react-toastify";
-const BACK_BASE_URL = import.meta.env.BACK_BASE_URL || "http://localhost:4000" 
-
 const toastSettings = {
     position: "bottom-right",
     autoClose: 5000,
@@ -13,6 +11,8 @@ const toastSettings = {
     progress: undefined,
     theme: "dark",
 }
+const BACK_BASE_URL = import.meta.env.BACK_BASE_URL || "http://localhost:4000" 
+
 
 const handleSubmit=(e)=>{
     e.preventDefault();
