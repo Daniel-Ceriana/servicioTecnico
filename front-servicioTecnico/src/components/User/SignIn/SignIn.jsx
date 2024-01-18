@@ -1,6 +1,8 @@
 import React from "react";
 import axios from "axios"
 import { toast } from "react-toastify";
+import { useDispatch } from "react-redux";
+import { signIn } from "../../../redux/actions/userActions";
 const toastSettings = {
     position: "bottom-right",
     autoClose: 5000,
@@ -23,6 +25,7 @@ const handleSubmit=(e)=>{
 
 
 const postData=async(formData)=>{
+
     const userData={...formData,from:"signUp-form",aplication:"ServicioTecnico"}
     const res=await axios.post(`${BACK_BASE_URL}/api/auth/SignIn`,{userData})
     if(!res.data.success){
@@ -35,12 +38,17 @@ const postData=async(formData)=>{
 }
 
 function SignIn() {
+    const dispatch = useDispatch();
+  const handleSubmit1= (e)=>{
+      handleSubmit(e)
+      dispatch(signIn("asd"))
+  }
     return (
         <div className="SignIn">
           <h1>SignIn</h1>
 
         <form
-        onSubmit={(e)=>{handleSubmit(e)}}>
+        onSubmit={(e)=>{handleSubmit1(e)}}>
             <div>
                 <label htmlFor="email">Email: </label>
                 <input type="email" name="email" id="email" />

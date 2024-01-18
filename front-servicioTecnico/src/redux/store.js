@@ -1,9 +1,10 @@
-// import { configureStore } from "@reduxjs/toolkit";
+import { configureStore } from "@reduxjs/toolkit";
+import userReducer from "./reducers/userReducer";
 
 
-// export const store = configureStore({
-//   reducer: {
+export const store = configureStore({
+  reducer: {
+    user:userReducer
+  },
+});
 
-//     // productsFiltered: productReducer, ==== los filtrados van dentro de products
-//   },
-// });
