@@ -41,6 +41,7 @@ function SignIn() {
     const dispatch = useDispatch();
   const handleSubmit1= (e)=>{
       handleSubmit(e)
+      console.log("AAA")
       dispatch(signIn("asd"))
   }
     return (

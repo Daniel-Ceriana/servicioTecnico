@@ -1,14 +1,17 @@
 import {createReducer} from '@reduxjs/toolkit'
-import {signIn} from "../actions/userActions"
+import {signIn} from "../actions/userActions.js"
 
 const initialState={
-    user:undefined
+        fullName:"",
+        email:"",
+        role:""
 };
 
 const userReducer = createReducer(initialState,(builder)=>{
     return builder.addCase(signIn, (state,action)=>{
-        console.log(action)
-        const newStore = {...state,user:action.payload.user}
+
+        let newStore = state
+        Object.keys(action.payload).forEach((key)=>newStore[key] = action.payload[key])
         return newStore;
     })
 })

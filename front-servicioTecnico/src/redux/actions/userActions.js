@@ -5,7 +5,8 @@ import axios from "axios"
 const signIn = createAction("signIn", (data)=>{
     console.log(data)
 
-    return data;
+    return {payload:{fullName:"NOMBRE ALGO",
+                        role:"ADMIN"}};
 })
 
 
