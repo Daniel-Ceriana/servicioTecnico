@@ -8,10 +8,14 @@ const initialState={
 };
 
 const userReducer = createReducer(initialState,(builder)=>{
-    return builder.addCase(signIn, (state,action)=>{
+    return builder.addCase(signIn.fulfilled, (state,action)=>{
 
         let newStore = state
         Object.keys(action.payload).forEach((key)=>newStore[key] = action.payload[key])
+        return newStore;
+    })
+    .addCase(signUp.fulfilled, (state,action)=>{
+        let newStore = state
         return newStore;
     })
 })
