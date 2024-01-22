@@ -1,5 +1,5 @@
 import {createReducer} from '@reduxjs/toolkit'
-import {signIn} from "../actions/userActions.js"
+import {signIn,signUp} from "../actions/userActions.js"
 
 const initialState={
         fullName:"",
