@@ -24,20 +24,31 @@ const handleSubmit=(e)=>{
 
 
 const postData=async(formData,token)=>{
-    const userData={...formData,from:"signUp-form",aplication:"ServicioTecnico"}
-    const res=await axios.put(`${BACK_BASE_URL}/api/auth/${token.id}`,{userData})
-    if(!res.data.success){
-        // mostrar pop up de error
-        console.log(res.data.message)
-        toast.error(res.data.message,toastSettings);
+    try {
+        const token = localStorage.getItem("StToken")
+        if(token){
+            const userData={...formData,from:"signUp-form",aplication:"ServicioTecnico"}
+            const res=await axios.post(`${BACK_BASE_URL}/api/auth/${token.id}`,{userData})
+            if(!res.data.success){
+                // mostrar pop up de error
+                console.log(res.data.message)
+                toast.error(res.data.message,toastSettings);
+            }
+            toast.success(res.data.message, toastSettings);
+        }    
+    } catch (error) {
+        console.log(error)
+        toast.error("Hubo un error, intente denuevo más tarde",toastSettings);
+
     }
-    toast.success(res.data.message, toastSettings);
+    
+    
 }
 
 function UpdateUser() {
     // ACTUALIZAR A TOKEN CORRECTO
     // HARCODEADO PARA LOGICA BASICA
-    const token={id:""}
+    
     return (
         <div className="UpdateUser">
           <h1>UpdateUser</h1>

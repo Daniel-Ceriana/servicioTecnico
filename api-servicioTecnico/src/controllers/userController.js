@@ -215,6 +215,12 @@ const userController = {
     try {
       // sacar el id desde el token
       // actualizar token
+      if(!req.params.id){
+        return res.json({
+          success: false,
+          message: "User not found, log in again and retry",
+        });
+      }
       let changes;
       if(req.body.email){
         const uniqueString = crypto.randomBytes(15).toString("hex");
