@@ -1,6 +1,4 @@
 import React from "react";
-import axios from "axios"
-import { toast } from "react-toastify";
 import { useDispatch } from "react-redux";
 import { signUp } from "../../../redux/actions/userActions";
 
