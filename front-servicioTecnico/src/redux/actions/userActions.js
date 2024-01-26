@@ -75,9 +75,28 @@ const signUp = createAsyncThunk("signUp", async(data)=>{
 
     }
 })
+const updateUser = createAsyncThunk("updateUser", async(data,token)=>{
+    const {email,fullName} = data
+    console.log(token)
+    // const id = token
+    // //  axios...
+    // if(!email.length>0 &&!email.length>0){
+    //     return{}
+    // }
+    // try {
+    //     const aux = axios.post;
+    //     await sendAxios({email,fullName},aux,`/update/${id}`)
+    //         return{}
+
+    // } catch (error) {
+    //     console.log(error)
+    //     return{}
+
+    // }
+})
 
 
-export {signIn,signUp}
+export {signIn,signUp,updateUser}
 
 
 
