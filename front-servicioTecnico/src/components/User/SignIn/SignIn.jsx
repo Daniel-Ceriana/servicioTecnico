@@ -8,7 +8,7 @@ import { signIn } from "../../../redux/actions/userActions";
 
 function SignIn() {
     const dispatch = useDispatch();
-    const handleSubmit1= (e)=>{
+    const handleSubmit= (e)=>{
       e.preventDefault();
       dispatch(signIn({email:e.target.elements.email.value,password:e.target.elements.password.value}))
   }
@@ -17,7 +17,7 @@ function SignIn() {
           <h1>SignIn</h1>
 
         <form
-        onSubmit={(e)=>{handleSubmit1(e)}}>
+        onSubmit={(e)=>{handleSubmit(e)}}>
             <div>
                 <label htmlFor="email">Email: </label>
                 <input type="email" name="email" id="email" />

@@ -66,14 +66,9 @@ const signUp = createAsyncThunk("signUp", async(data)=>{
     }
     try {
         const aux = axios.post;
-        const res = await sendAxios({email,fullName,password},aux,"signUp")
-        if(!res.data.success){
+        await sendAxios({email,fullName,password},aux,"signUp")
             return{}
-        }else{
-            console.log(res)
-            return {fullName:res.data.response.dataUser.fullName,
-                        role:res.data.response.dataUser.role};
-        }
+
     } catch (error) {
         console.log(error)
         return{}
