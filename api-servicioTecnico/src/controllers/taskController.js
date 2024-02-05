@@ -52,7 +52,7 @@ const taskController = {
         return res.json({
             status:"success",
             response:task,
-            message:"Tasks"
+            message:"Task"
         })
    } catch (error) {
         return res.json({
@@ -62,10 +62,35 @@ const taskController = {
    }
   },
   updateTaskData: async (req, res) => {
-   
+    try {
+        const task = await Task.findOneAndUpdate({_id:req.params.id},req.body,{new:true});
+
+        return res.json({
+            status:"success",
+            response:task,
+            message:"Task updated"
+        })
+   } catch (error) {
+        return res.json({
+            status:"error",
+            message:"Something went wrong: ", error
+        })
+   }
   },
   deleteTask: async (req, res) => {
-   
+    try {
+        const task = await Task.findOneAndDelete({_id:req.params.id});
+
+        return res.json({
+            status:"success",
+            message:"Task deleted"
+        })
+   } catch (error) {
+        return res.json({
+            status:"error",
+            message:"Something went wrong: ", error
+        })
+   }
   },
 
 
