@@ -22,17 +22,9 @@ const taskController = {
   createTask: async (req, res) => {
     try {
         const auxTask = new Task({
-            // clientFullName:"Nombre de cliente",
-            // clientEmail:"email de cliente",
-            // clientCellphone:111111111,
-            // employeeFullName:"Nombre de Empleado",
-            // description:"Descripcion de trabajo, aca deberia ir todo lo relacionado con los aspectos tecnicos y observaciones que haya del producto a reparar",
-            // status:"started",
-            // price:4000,
-            // amountPaid:1500,
             clientFullName:req.body.clientFullName,
             clientEmail:req.body.clientEmail,
-            clientCellphone:req.body.clientCellphone,
+            clientCellphone:req.body.clientCellphone||0,
             employeeFullName:req.body.employeeFullName,
             description:req.body.description,
             status:req.body.status,
@@ -54,7 +46,20 @@ const taskController = {
    }
   },
   getTaskById: async (req, res) => {
-   
+    try {
+        const task = await Task.findOne({_id:req.params.id});
+
+        return res.json({
+            status:"success",
+            response:task,
+            message:"Tasks"
+        })
+   } catch (error) {
+        return res.json({
+            status:"error",
+            message:"Something went wrong: ", error
+        })
+   }
   },
   updateTaskData: async (req, res) => {
    
