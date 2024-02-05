@@ -18,8 +18,6 @@ const signUpValidator = (req, res, next) => {
         "string.pattern.base":
           "password must have at least one uppercase, lowercase and number",
       }),
-    from: joi.string().required(),
-    aplication: joi.string().required(),
   });
   const validation = schema.validate(req.body.userData, { abortEarly: false });
   if (validation.error) {
@@ -41,8 +39,6 @@ const signInValidator = (req, res, next) => {
     }),
     password: joi.string().required(),
     //   agregar los required del from y aplication
-    from: joi.string(),
-    aplication: joi.string(),
   });
   const validation = schema.validate(req.body.userData, { abortEarly: false });
   if (validation.error) {
@@ -63,7 +59,6 @@ const updateUser = (req, res, next) => {
     email: joi.string().email({ minDomainSegments: 2 }).messages({
       "string.email": "wrong email format",
     }),
-    dni: joi.number(),
     password: joi
       .string()
       .min(8)
@@ -75,12 +70,6 @@ const updateUser = (req, res, next) => {
         "string.pattern.base":
           "password must have at least one uppercase, lowercase and number",
       }),
-    cellphone: joi.string(),
-    street: joi.string(),
-    city: joi.number(),
-    state: joi.string(),
-    postalCode: joi.number(),
-    country: joi.string(),
   });
   const validation = schema.validate(req.body.userData, { abortEarly: false });
   if (validation.error) {

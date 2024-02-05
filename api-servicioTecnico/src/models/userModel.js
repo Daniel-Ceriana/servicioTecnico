@@ -1,10 +1,8 @@
-const { boolean } = require("joi");
 const mongoose = require("mongoose");
 const userSchema = new mongoose.Schema({
   fullName: { type: String, required: true },
   email: { type: String, required: true },
-  password: [{ type: Object, required: true }],
-  aplication: { type: String },
+  password: { type: String, required: true },
   uniqueString: { type: String, required: true },
   uniqueString2: { type: String },
   changePasswordToken:{type:String},
