@@ -79,7 +79,7 @@ const taskController = {
   },
   deleteTask: async (req, res) => {
     try {
-        const task = await Task.findOneAndDelete({_id:req.params.id});
+        await Task.findOneAndDelete({_id:req.params.id});
 
         return res.json({
             status:"success",
